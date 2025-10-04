@@ -7,7 +7,7 @@ This version adds **step-by-step explanations** so beginners can learn how and w
 ## Quick Basics
 - **Fields**: `$1`, `$2`, … are columns. `$0` is the whole line.
 - **Special vars**: 
-  - `NR` → record (line) number across all files.
+  - `NR` → number record (line) number across all files.
   - `FNR` → record number within current file.
   - `NF` → number of fields in the line.
   - `FILENAME` → current file name.
