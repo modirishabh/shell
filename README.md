@@ -1,56 +1,102 @@
-########### AWk Command requies formatted data like csv(comma saparedted values) tsv files ###############
-#1 Print specific column, say column number 2
+# AWK, SED, and GREP Commands Reference
+
+---
+
+## AWK
+
+> AWK works best with **formatted data** like CSV (comma-separated values) or TSV files.
+
+### 1. Print a specific column (e.g., column number 2)
+```bash
 awk '{print $2}' file_name
-
-#2 Apply filter on column sepcific value 'cmd'
+```
+### 2. Apply filter on a column with a specific value (e.g., cmd)
+```
 awk '/cmd/ {print $2}' file_name
+```
 
-#3 Count letters
+## 3. Count lines containing a pattern
 awk '/cmd/ {count++} END {print count}' file_name
 
-#4 condition
-awk '$3 >= "03:11:54" && $3 <= "04:00:43" {print $7}' file_name 
+## 4. Conditional filter (between two time ranges, print column 7)
+awk '$3 >= "03:11:54" && $3 <= "04:00:43" {print $7}' file_name
 
-#5 print only 2 to 10 lines only
+## 5. Print only lines 2 to 10
 awk 'NR >= 2 && NR <= 10 {print}' file_name
 
-########### SED(stream editor) for unformatted data, sed works on expression "//"
-############## case 1 ##############################
-#step1:
+### 6. Frequency analysis of a column
+
+sort – sorts the extracted column values alphabetically/numerically
+
+uniq -c – collapses duplicate values and counts them
+
+sort -nr – sorts by frequency, highest first
+
+head -n 5 – shows the top 5 results
+
+awk '{print $4}' dummy_log.csv | sort | uniq -c | sort -nr | head -n 5
+
+# SED (Stream Editor)
+
+Useful for working on unformatted text data, with expressions defined inside "//".
+
+## Case 1: Printing lines
+
+Step 1:
+
 sed '//' file_name
 
-#step2: print
-sed '/cmd/p' file_name # here we want to print "cmd" here it is print all file
 
-#step3:
-sed -n '/cmd/p' file_name # here we -n delimit the value and p is to print only cmd contained  values.
+Step 2: Print all lines containing cmd
 
-######### case 2 Replace the values ###############
+sed '/cmd/p' file_name
 
-#step1:
+
+Step 3: Print only lines containing cmd
+
+sed -n '/cmd/p' file_name
+
+## Case 2: Replacing values
+
+Step 1:
+
 sed '' file_name
 
-#step2: 
-sed '/cmd/ram/' file_name # here we want to replace cmd with ram
 
-#step3:
-sed 's/cmd/ram/g' file_name # g sands for global changes and s "sub change" as we taking small value from file
+Step 2: Replace cmd with ram (first occurrence in each line)
+
+sed '/cmd/ram/' file_name
 
 
-######### case 3 print the line number where cmd occurs ###############
-sed -n -e '/Cleanup/=' app.log # n delimit the value and "=" show the line number
+Step 3: Replace cmd with ram globally (all occurrences in each line)
 
-######### case 3 print the line number where cmd occurs and also print the raw ###############
+sed 's/cmd/ram/g' file_name
+
+## Case 3: Print line numbers
+
+## Print line numbers where Cleanup occurs
+
+sed -n -e '/Cleanup/=' app.log
+
+
+## Print both line numbers and matching lines
+
 sed -n -e '/Cleanup/=' -e app.log
 
 
-######### case 2 Replace the values only for 10 lines ###############
-sed '1,10 s/Cleanup/starting' app.log
+## Replace only within first 10 lines
 
+sed '1,10 s/Cleanup/starting/' app.log
 
+# GREP
 
+Example: Search for processes and extract the PID
+ps -aux | grep ubuntu | awk '{print $2}'
 
-######### grep ###########
-ps -aux | grep ubuntu | awk {print $2}
+# 📌 Notes
 
+# AWK is best for structured/tabular data (CSV/TSV/logs with fields).
 
+# SED is best for inline editing and transformations.
+
+# GREP is best for searching/filtering text quickly.
