@@ -88,7 +88,9 @@ sed -n -e '/Cleanup/=' -e app.log
 
 sed '1,10 s/Cleanup/starting/' app.log
 
-# SED Command Cheat Sheet
+
+
+# SED Command Cheat Sheet edit text line by line
 
 ---
 
@@ -98,6 +100,8 @@ The basic syntax for using the `sed` command in Linux:
 
 ```bash
 sed [OPTIONS] 'COMMAND' [INPUTFILE...]
+
+## sed [OPTIONS] ' [line number]  [substitute]/[word_need_to_be_replace]/[word_replace_by]/[occurrence][print or global]' file_name
 OPTIONS: Optional flags that modify the behavior of sed.
 
 COMMAND: The command or sequence of commands to execute.
@@ -111,20 +115,24 @@ Option	Description
 -e	Allows multiple commands.
 -f	Reads sed commands from a file.
 -r	Use extended regular expressions.
-
+``` 
 Practical Examples
 Consider an input file (geekfile.txt):
 
 pgsql
 Copy code
+```
 unix is great os. unix is opensource. unix is free os.
 learn operating system.
 unix linux which one you choose.
 unix is easy to learn.unix is a multiuser os.Learn unix .unix is a powerful.
-1. Replace (Substitute) String
+```
+## 1. Replace (Substitute) String
 bash
 Copy code
 sed 's/unix/linux/' geekfile.txt
+
+Syntax sed ' [line number]  [substitute]/[word_need_to_be_replace]/[word_replace_by]/[occurrence][print or global]' file_name
 Output:
 
 pgsql
